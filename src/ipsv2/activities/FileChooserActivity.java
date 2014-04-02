@@ -74,6 +74,7 @@ public class FileChooserActivity extends ListActivity {
 		Toast.makeText(this, "File Selected: "+o.getName(), Toast.LENGTH_SHORT).show();
 		// bring up Android chooser
 		Log.i("Test", o.getPath());
+		
 		//startActivity(intent);
 	}
 

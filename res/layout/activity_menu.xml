@@ -2,13 +2,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@color/black"
-    android:orientation="vertical"
     tools:context=".MenuActivity" >
+
+    <TextView
+        android:id="@+id/TextView02"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/chooselevel"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#FFFFFF" />
 
     <RadioGroup
         android:id="@+id/radioGroup1"
@@ -62,10 +70,10 @@
 
     <Button
         android:id="@+id/button1"
-        android:layout_width="126dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/browse"
-        android:onClick="fileChooser" />
+        android:onClick="fileChooser"
+        android:text="@string/browse" />
 
     <TextView
         android:id="@+id/TextView08"
@@ -94,11 +102,5 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#FFFFFF" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/locate"/>
 
 </LinearLayout>
