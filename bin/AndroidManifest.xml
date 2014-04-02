@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ipsv2.activities"
+    package="com.example.ips"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -25,6 +25,10 @@
         <activity
             android:name="ipsv2.activities.FileChooserActivity"
             android:label="@string/title_activity_file_chooser" >
+        </activity>
+        <activity
+            android:name="ipsv2.activities.PrintXMLActivity"
+            android:label="@string/title_activity_print_xml" >
         </activity>
     </application>
 

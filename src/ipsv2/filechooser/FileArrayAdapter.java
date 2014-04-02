@@ -1,8 +1,8 @@
 package ipsv2.filechooser;
 
-import ipsv2.activities.R;
-
 import java.util.List;
+
+import com.example.ips.R;
 
 import android.content.Context;
 import android.view.LayoutInflater;

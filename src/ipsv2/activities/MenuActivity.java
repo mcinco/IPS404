@@ -1,5 +1,7 @@
 package ipsv2.activities;
 
+import com.example.ips.R;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;

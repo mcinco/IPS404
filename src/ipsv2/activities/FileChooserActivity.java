@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import android.net.Uri;
+import com.example.ips.R;
 import android.os.Bundle;
 import android.app.ListActivity;
 import android.content.Intent;
@@ -74,8 +74,10 @@ public class FileChooserActivity extends ListActivity {
 		Toast.makeText(this, "File Selected: "+o.getName(), Toast.LENGTH_SHORT).show();
 		// bring up Android chooser
 		Log.i("Test", o.getPath());
-		
-		//startActivity(intent);
+		Intent intent = new Intent(this,PrintXMLActivity.class);
+		intent.setType("text/plain");
+		intent.putExtra(EXTRA_MESSAGE, o.getPath());
+		startActivity(intent);
 	}
 
 	@Override
