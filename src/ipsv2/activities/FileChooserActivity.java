@@ -10,8 +10,10 @@ import java.util.Collections;
 import java.util.List;
 
 import com.example.ips.R;
+
 import android.os.Bundle;
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
@@ -67,17 +69,24 @@ public class FileChooserActivity extends ListActivity {
 			fill(currentDir);
 		}
 		else
-			onFileClick(o);
+			checkFile(o);
 	}
 
-	private void onFileClick(Option o) {
-		Toast.makeText(this, "File Selected: "+o.getName(), Toast.LENGTH_SHORT).show();
-		// bring up Android chooser
-		Log.i("Test", o.getPath());
-		Intent intent = new Intent(this,PrintXMLActivity.class);
-		intent.setType("text/plain");
-		intent.putExtra(EXTRA_MESSAGE, o.getPath());
-		startActivity(intent);
+	private void checkFile(Option o){
+		String substr = o.getPath().substring(o.getPath().length()-3);
+
+		if (!substr.equalsIgnoreCase("CSV")){
+			Context context = getApplicationContext();
+			CharSequence text = "Must load CSV file only";
+			Toast toast = Toast.makeText(context, text, 15);
+			toast.show();
+		}
+		else {
+			Intent intent = new Intent(this,PrintXMLActivity.class);
+			intent.setType("text/plain");
+			intent.putExtra(EXTRA_MESSAGE, o.getPath());
+			startActivity(intent);
+		}
 	}
 
 	@Override
