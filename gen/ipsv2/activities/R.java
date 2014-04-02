@@ -29,13 +29,14 @@ public final class R {
     }
     public static final class id {
         public static final int TextView01=0x7f090003;
+        public static final int TextView02=0x7f09000d;
         public static final int TextView03=0x7f090005;
         public static final int TextView04=0x7f090004;
         public static final int TextView05=0x7f09000b;
         public static final int TextView06=0x7f09000a;
         public static final int TextView07=0x7f090009;
         public static final int TextView08=0x7f090008;
-        public static final int action_settings=0x7f09000d;
+        public static final int action_settings=0x7f09000e;
         public static final int button1=0x7f090007;
         public static final int button2=0x7f09000c;
         public static final int radio0=0x7f090001;
@@ -46,10 +47,12 @@ public final class R {
     public static final class layout {
         public static final int activity_file_chooser=0x7f030000;
         public static final int activity_menu=0x7f030001;
+        public static final int file_view=0x7f030002;
     }
     public static final class menu {
         public static final int file_chooser=0x7f080000;
         public static final int menu=0x7f080001;
+        public static final int send=0x7f080002;
     }
     public static final class string {
         public static final int COL2=0x7f050002;
