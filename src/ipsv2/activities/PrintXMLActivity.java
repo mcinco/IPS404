@@ -3,39 +3,27 @@ package ipsv2.activities;
 import ipsv2.objects.AccessPoint;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.StringTokenizer;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
 
 import com.example.ips.R;
 
 import android.os.Bundle;
+import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.widget.TextView;
 
-public class PrintXMLActivity extends ListActivity {
+public class PrintXMLActivity extends Activity {
 
 	TextView textView;
 	String filepath = "";
 	ArrayList<AccessPoint> aps = new ArrayList<AccessPoint>();
+	private BufferedReader br;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,26 +31,25 @@ public class PrintXMLActivity extends ListActivity {
 
 		Intent intent = getIntent();
 		filepath = intent.getStringExtra(FileChooserActivity.EXTRA_MESSAGE);
-		//Log.i("Test2", filepath);
+		Log.i("Test2", filepath);
 		setContentView(R.layout.activity_print_xml);
-
-		textView = (TextView) findViewById(R.id.textView3);
 		loadAPs();
 	}
 
 	private void loadAPs() {
 		try {
-			BufferedReader br = new BufferedReader(new FileReader(filepath));
-			String strLine = null;
-			StringTokenizer st = null;
-			int lineNumber = 0, tokenNumber = 0;
+			br = new BufferedReader(new FileReader(filepath));
+			AccessPoint a = new AccessPoint();
 
 			while((filepath = br.readLine()) != null) {
-				lineNumber++;
 				String[] result = filepath.split(",");
-				for (int x=0; x<result.length; x++) {
-					System.out.println(result[x]);
-				}
+				a.setMac(result[0]);
+				a.setLevel(result[1]);
+				a.setX(result[2]);
+				a.setY(result[3]);
+				a.setDecription(result[4]);
+				aps.add(a);
+				Log.i("Test3", a.toString());
 			}
 		}
 

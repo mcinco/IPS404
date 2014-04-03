@@ -39,6 +39,11 @@ public class AccessPoint {
 	public void setDecription(String decription) {
 		this.decription = decription;
 	}
+	@Override
+	public String toString() {
+		return "AccessPoint [mac=" + mac + ", level=" + level + ", x=" + x
+				+ ", y=" + y + ", decription=" + decription + "]";
+	}
 
 
 }
