@@ -22,6 +22,7 @@ public class PrintXMLActivity extends Activity {
 
 	TextView textView;
 	String filepath = "";
+	String level = "";
 	ArrayList<AccessPoint> aps = new ArrayList<AccessPoint>();
 	private BufferedReader br;
 
@@ -30,8 +31,11 @@ public class PrintXMLActivity extends Activity {
 		super.onCreate(savedInstanceState);
 
 		Intent intent = getIntent();
-		filepath = intent.getStringExtra(FileChooserActivity.EXTRA_MESSAGE);
-		Log.i("Test2", filepath);
+		//filepath = intent.getStringExtra(FileChooserActivity.EXTRA_MESSAGE);
+		level = intent.getExtras().getString("level");//intent.getStringExtra(FileChooserActivity.);
+		filepath = intent.getExtras().getString("path");
+		Log.i("Level", level);
+		Log.i("Path", filepath);
 		setContentView(R.layout.activity_print_xml);
 		loadAPs();
 	}
@@ -52,7 +56,6 @@ public class PrintXMLActivity extends Activity {
 				Log.i("Test3", a.toString());
 			}
 		}
-
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

@@ -26,11 +26,15 @@ public class FileChooserActivity extends ListActivity {
 	//FileChooser
 	private File currentDir;
 	private FileArrayAdapter adapter;
-	public final static String EXTRA_MESSAGE = "com.example.studytime";
+	private String path = "com.example.studytime";
+	private String level="";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Intent intent = getIntent();
+		level = intent.getExtras().getString("levelChosen");
+		Log.i("Level", level);
 		currentDir = new File("/sdcard/");
 		fill(currentDir);
 	}
@@ -84,7 +88,8 @@ public class FileChooserActivity extends ListActivity {
 		else {
 			Intent intent = new Intent(this,PrintXMLActivity.class);
 			intent.setType("text/plain");
-			intent.putExtra(EXTRA_MESSAGE, o.getPath());
+			intent.putExtra("path", o.getPath());
+			intent.putExtra("level", level);
 			startActivity(intent);
 		}
 	}
