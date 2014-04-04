@@ -26,8 +26,7 @@ public class FileChooserActivity extends ListActivity {
 	//FileChooser
 	private File currentDir;
 	private FileArrayAdapter adapter;
-	private String path = "com.example.studytime";
-	private String level="";
+	private String level = "";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

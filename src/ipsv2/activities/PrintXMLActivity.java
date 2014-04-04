@@ -23,6 +23,7 @@ public class PrintXMLActivity extends Activity {
 	TextView textView;
 	String filepath = "";
 	String level = "";
+	String levelNo = "";
 	ArrayList<AccessPoint> aps = new ArrayList<AccessPoint>();
 	private BufferedReader br;
 
@@ -31,10 +32,11 @@ public class PrintXMLActivity extends Activity {
 		super.onCreate(savedInstanceState);
 
 		Intent intent = getIntent();
-		//filepath = intent.getStringExtra(FileChooserActivity.EXTRA_MESSAGE);
-		level = intent.getExtras().getString("level");//intent.getStringExtra(FileChooserActivity.);
+		level = intent.getExtras().getString("level");
+		levelNo = level.substring((level.length())-1);
 		filepath = intent.getExtras().getString("path");
 		Log.i("Level", level);
+		Log.i("LevelNumber", levelNo);
 		Log.i("Path", filepath);
 		setContentView(R.layout.activity_print_xml);
 		loadAPs();
@@ -45,16 +47,19 @@ public class PrintXMLActivity extends Activity {
 			br = new BufferedReader(new FileReader(filepath));
 			AccessPoint a = new AccessPoint();
 
-			while((filepath = br.readLine()) != null) {
+			while(((filepath = br.readLine()) != null)) {
 				String[] result = filepath.split(",");
 				a.setMac(result[0]);
 				a.setLevel(result[1]);
 				a.setX(result[2]);
 				a.setY(result[3]);
 				a.setDecription(result[4]);
-				aps.add(a);
-				Log.i("Test3", a.toString());
+				if (a.getLevel().equalsIgnoreCase(levelNo)){
+					aps.add(a);
+					Log.i("Level "+levelNo+" APs", a.toString());
+				}
 			}
+
 		}
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
