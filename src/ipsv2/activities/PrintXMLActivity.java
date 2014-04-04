@@ -16,10 +16,13 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class PrintXMLActivity extends Activity {
 
+	private ListView lv;
 	TextView textView;
 	String filepath = "";
 	String level = "";
@@ -30,6 +33,8 @@ public class PrintXMLActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_print_xml);
+		lv = (ListView) findViewById(R.id.listView1);
 
 		Intent intent = getIntent();
 		level = intent.getExtras().getString("level");
@@ -38,8 +43,11 @@ public class PrintXMLActivity extends Activity {
 		Log.i("Level", level);
 		Log.i("LevelNumber", levelNo);
 		Log.i("Path", filepath);
-		setContentView(R.layout.activity_print_xml);
+
 		loadAPs();
+
+		ArrayAdapter<AccessPoint> adapter = new ArrayAdapter<AccessPoint>(this, android.R.layout.simple_list_item_1, aps);
+		lv.setAdapter(adapter);
 	}
 
 	private void loadAPs() {
@@ -56,7 +64,7 @@ public class PrintXMLActivity extends Activity {
 				a.setDecription(result[4]);
 				if (a.getLevel().equalsIgnoreCase(levelNo)){
 					aps.add(a);
-					Log.i("Level "+levelNo+" APs", a.toString());
+					//Log.i("Level "+levelNo+" APs", a.toString());
 				}
 			}
 
