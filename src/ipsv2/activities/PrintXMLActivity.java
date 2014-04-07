@@ -7,12 +7,15 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.example.ips.R;
 
+import android.net.wifi.ScanResult;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.app.Activity;
-import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
@@ -27,8 +30,9 @@ public class PrintXMLActivity extends Activity {
 	String filepath = "";
 	String level = "";
 	String levelNo = "";
-	ArrayList<AccessPoint> aps = new ArrayList<AccessPoint>();
+	private ArrayList<AccessPoint> aps = new ArrayList<AccessPoint>();
 	private BufferedReader br;
+	private WifiManager wifi;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +48,12 @@ public class PrintXMLActivity extends Activity {
 		Log.i("LevelNumber", levelNo);
 		Log.i("Path", filepath);
 
+
 		loadAPs();
 
+//		for (AccessPoint a: aps){
+//			Log.i("t2_final", a.toString());
+//		}
 		ArrayAdapter<AccessPoint> adapter = new ArrayAdapter<AccessPoint>(this, android.R.layout.simple_list_item_1, aps);
 		lv.setAdapter(adapter);
 	}
@@ -53,21 +61,32 @@ public class PrintXMLActivity extends Activity {
 	private void loadAPs() {
 		try {
 			br = new BufferedReader(new FileReader(filepath));
-			AccessPoint a = new AccessPoint();
+			wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+			List<ScanResult> wlist = wifi.getScanResults();
+			for (ScanResult r:wlist)
+				Log.i("SSID", Integer.toString(r.level));
 
 			while(((filepath = br.readLine()) != null)) {
+				AccessPoint a = new AccessPoint();
 				String[] result = filepath.split(",");
 				a.setMac(result[0]);
 				a.setLevel(result[1]);
 				a.setX(result[2]);
 				a.setY(result[3]);
 				a.setDecription(result[4]);
-				if (a.getLevel().equalsIgnoreCase(levelNo)){
-					aps.add(a);
-					//Log.i("Level "+levelNo+" APs", a.toString());
+				for (ScanResult sr : wlist){
+					if (sr.BSSID.equalsIgnoreCase(a.getMac()))
+						a.setRssi(sr.level);
 				}
-			}
+				if (a.getLevel().equals(levelNo)){
+					aps.add(a);
+				}
 
+			}
+			br.close();
+			for (AccessPoint b: aps){
+				Log.i("t2_final", b.toString());
+			}
 		}
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
