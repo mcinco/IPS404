@@ -63,8 +63,8 @@ public class PrintXMLActivity extends Activity {
 			br = new BufferedReader(new FileReader(filepath));
 			wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
 			List<ScanResult> wlist = wifi.getScanResults();
-			for (ScanResult r:wlist)
-				Log.i("SSID", Integer.toString(r.level));
+//			for (ScanResult r:wlist)
+//				Log.i("SSID", r.toString());
 
 			while(((filepath = br.readLine()) != null)) {
 				AccessPoint a = new AccessPoint();
