@@ -8,7 +8,7 @@ public class AccessPoint {
 	private String y;
 	private String decription;
 	private int rssi;
-
+	private int freq;
 
 	public String getMac() {
 		return mac;
@@ -52,14 +52,34 @@ public class AccessPoint {
 		//				return "AccessPoint [mac=" + mac + ", level=" + level + ", x=" + x
 		//						+ ", y=" + y + ", decription=" + decription + ", rssi=" + rssi
 		//						+ "]";
-		return "ACCESS POINT"
+		return ("ACCESS POINT"
 		+ "\nSSID: "+mac
 		+ "\nLevel: "+level
 		+ "\nSignal Strength: "+rssi
 		+ "\nX: "+x
 		+ "\nY: "+y
-		+ "\nDescription: "+decription;
+		+ "\nFrequency: "+freq
+		+ "\nDistance: "+this.getDistance()
+		+ "\nDescription: "+decription);
 	}
+
+	/*
+	 * Free Space Path Loss Formula
+	 * Source: http://rvmiller.com/2013/05/part-1-wifi-based-trilateration-on-android/
+	 */
+	public double getDistance() {
+		double exp = (27.55 - (20 * Math.log10(this.getFreq())) + Math.abs(this.getRssi())) / 20.0;
+		return Math.pow(10.0, exp);
+	}
+	public int getFreq() {
+		return freq;
+	}
+	public void setFreq(int freq) {
+		this.freq = freq;
+	}
+
+
+
 
 
 

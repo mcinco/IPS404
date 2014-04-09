@@ -7,7 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 import com.example.ips.R;
 
@@ -19,9 +19,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
-import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -33,9 +31,14 @@ public class PrintXMLActivity extends Activity {
 	String level = "";
 	String levelNo = "";
 	private ArrayList<AccessPoint> aps = new ArrayList<AccessPoint>();
+	private ArrayList<ScanResult> wlist = new ArrayList<ScanResult>();
 	private BufferedReader br;
 	private WifiManager wifi;
 	private boolean scan;
+
+	private double X, Y = 0;
+	private ArrayList<AccessPoint> top3 = new ArrayList<AccessPoint>();
+	private HashMap<String, Integer> vals = new HashMap<String, Integer>();
 
 
 	@Override
@@ -54,6 +57,7 @@ public class PrintXMLActivity extends Activity {
 
 		wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
 		scan = wifi.startScan();
+		wlist = (ArrayList<ScanResult>) wifi.getScanResults();
 		loadAPs();
 
 		ArrayAdapter<AccessPoint> adapter = new ArrayAdapter<AccessPoint>(this, R.layout.mytextview, aps);
@@ -64,7 +68,6 @@ public class PrintXMLActivity extends Activity {
 		try {
 			br = new BufferedReader(new FileReader(filepath));
 
-			List<ScanResult> wlist = wifi.getScanResults();
 
 			while(((filepath = br.readLine()) != null)) {
 				AccessPoint a = new AccessPoint();
@@ -77,6 +80,7 @@ public class PrintXMLActivity extends Activity {
 				for (ScanResult sr : wlist){
 					if (sr.BSSID.equalsIgnoreCase(a.getMac())){
 						a.setRssi(sr.level);
+						a.setFreq(sr.frequency);
 						Log.i("freq", Integer.toString(sr.frequency));
 						Log.i("dBm", Integer.toString(sr.level));
 					}
