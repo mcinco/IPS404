@@ -14,6 +14,6 @@
 
     <string name="title_activity_file_chooser">Choose a file for location</string>
     <string name="title_activity_print_xml">Access Points Loaded</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="getLocation">Get Location</string>
 
 </resources>

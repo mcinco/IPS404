@@ -19,7 +19,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -33,6 +35,8 @@ public class PrintXMLActivity extends Activity {
 	private ArrayList<AccessPoint> aps = new ArrayList<AccessPoint>();
 	private BufferedReader br;
 	private WifiManager wifi;
+	private boolean scan;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,23 +52,19 @@ public class PrintXMLActivity extends Activity {
 		Log.i("LevelNumber", levelNo);
 		Log.i("Path", filepath);
 
-
+		wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+		scan = wifi.startScan();
 		loadAPs();
 
-//		for (AccessPoint a: aps){
-//			Log.i("t2_final", a.toString());
-//		}
-		ArrayAdapter<AccessPoint> adapter = new ArrayAdapter<AccessPoint>(this, android.R.layout.simple_list_item_1, aps);
+		ArrayAdapter<AccessPoint> adapter = new ArrayAdapter<AccessPoint>(this, R.layout.mytextview, aps);
 		lv.setAdapter(adapter);
 	}
 
 	private void loadAPs() {
 		try {
 			br = new BufferedReader(new FileReader(filepath));
-			wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+
 			List<ScanResult> wlist = wifi.getScanResults();
-//			for (ScanResult r:wlist)
-//				Log.i("SSID", r.toString());
 
 			while(((filepath = br.readLine()) != null)) {
 				AccessPoint a = new AccessPoint();
@@ -75,18 +75,17 @@ public class PrintXMLActivity extends Activity {
 				a.setY(result[3]);
 				a.setDecription(result[4]);
 				for (ScanResult sr : wlist){
-					if (sr.BSSID.equalsIgnoreCase(a.getMac()))
+					if (sr.BSSID.equalsIgnoreCase(a.getMac())){
 						a.setRssi(sr.level);
+						Log.i("freq", Integer.toString(sr.frequency));
+						Log.i("dBm", Integer.toString(sr.level));
+					}
 				}
 				if (a.getLevel().equals(levelNo)){
 					aps.add(a);
 				}
-
 			}
 			br.close();
-			for (AccessPoint b: aps){
-				Log.i("t2_final", b.toString());
-			}
 		}
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -94,6 +93,7 @@ public class PrintXMLActivity extends Activity {
 			e.printStackTrace();
 		}
 	}
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

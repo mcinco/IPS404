@@ -49,16 +49,16 @@ public class AccessPoint {
 	}
 	@Override
 	public String toString() {
-				return "AccessPoint [mac=" + mac + ", level=" + level + ", x=" + x
-						+ ", y=" + y + ", decription=" + decription + ", rssi=" + rssi
-						+ "]";
-//		return "AccessPoint:"
-//		+ "\nSSID: "+mac
-//		+ "\nLevel: "+level
-//		+ "\nSignal Strength: "+rssi
-//		+ "\nX: "+x
-//		+ "\nY: "+y
-//		+ "\nDescription: "+decription;
+		//				return "AccessPoint [mac=" + mac + ", level=" + level + ", x=" + x
+		//						+ ", y=" + y + ", decription=" + decription + ", rssi=" + rssi
+		//						+ "]";
+		return "ACCESS POINT"
+		+ "\nSSID: "+mac
+		+ "\nLevel: "+level
+		+ "\nSignal Strength: "+rssi
+		+ "\nX: "+x
+		+ "\nY: "+y
+		+ "\nDescription: "+decription;
 	}
 
 
