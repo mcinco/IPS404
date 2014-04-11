@@ -53,14 +53,14 @@ public class AccessPoint {
 		//						+ ", y=" + y + ", decription=" + decription + ", rssi=" + rssi
 		//						+ "]";
 		return ("ACCESS POINT"
-		+ "\nSSID: "+mac
-		+ "\nLevel: "+level
-		+ "\nSignal Strength: "+rssi
-		+ "\nX: "+x
-		+ "\nY: "+y
-		+ "\nFrequency: "+freq
-		+ "\nDistance: "+this.getDistance()
-		+ "\nDescription: "+decription);
+				+ "\nSSID: "+mac
+				+ "\nLevel: "+level
+				+ "\nSignal Strength: "+rssi
+				+ "\nX: "+x
+				+ "\nY: "+y
+				+ "\nFrequency: "+freq
+				+ "\nDistance: "+this.getDistance()
+				+ "\nDescription: "+decription);
 	}
 
 	/*
@@ -68,8 +68,15 @@ public class AccessPoint {
 	 * Source: http://rvmiller.com/2013/05/part-1-wifi-based-trilateration-on-android/
 	 */
 	public double getDistance() {
+		if (this.getRssi() == 0)
+			return 0;
+
 		double exp = (27.55 - (20 * Math.log10(this.getFreq())) + Math.abs(this.getRssi())) / 20.0;
-		return Math.pow(10.0, exp);
+
+		if (Math.pow(10.0, exp) >= 25)
+			return 25;
+		else
+			return Math.pow(10.0, exp);
 	}
 	public int getFreq() {
 		return freq;

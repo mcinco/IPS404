@@ -13,7 +13,7 @@
     <color name="white">#FFFFFF</color>
 
     <string name="title_activity_file_chooser">Choose a file for location</string>
-    <string name="title_activity_print_xml">Access Points Loaded</string>
+    <string name="title_activity_print_xml">Access Points Detected</string>
     <string name="getLocation">Get Location</string>
 
 </resources>
