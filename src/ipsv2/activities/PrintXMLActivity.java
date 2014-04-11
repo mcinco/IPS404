@@ -130,7 +130,8 @@ public class PrintXMLActivity extends Activity {
 	}
 
 	private void oneAP() {
-		// TODO Auto-generated method stub
+		this.X = aps.get(0).getX();
+		this.Y = aps.get(0).getY();
 
 	}
 
