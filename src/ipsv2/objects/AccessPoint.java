@@ -1,6 +1,6 @@
 package ipsv2.objects;
 
-public class AccessPoint {
+public class AccessPoint implements Comparable<AccessPoint>{
 
 	private String mac;
 	private String level;
@@ -85,10 +85,9 @@ public class AccessPoint {
 		this.freq = freq;
 	}
 
-
-
-
-
-
-
+	public int compareTo(AccessPoint o) {
+		int compareRSSI = ((AccessPoint) o).getRssi();
+		//sort by better signal strength
+		return Math.abs(compareRSSI) - Math.abs(this.rssi);
+	}
 }
