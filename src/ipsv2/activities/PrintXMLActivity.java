@@ -115,6 +115,11 @@ public class PrintXMLActivity extends Activity {
 		r2 = aps.get(1).getDistance();
 		r3 = aps.get(2).getDistance();
 
+		// If AP detected is not in current level, give it less weighting.
+		if (!aps.get(0).getLevel().equals(levelNo)){ r1 = r1/7.5; }
+		if (!aps.get(1).getLevel().equals(levelNo)){ r2 = r2/7.5; }
+		if (!aps.get(2).getLevel().equals(levelNo)){ r3 = r3/7.5; }
+
 		boolean oneNtwo = isIntersecting(x1, y1, x2, y2, r1, r2);
 		boolean twoNthree = isIntersecting(x2, y2, x3, y3, r2, r3);
 		boolean oneNthree = isIntersecting(x1, y1, x3, y3, r1, r3);
@@ -146,7 +151,8 @@ public class PrintXMLActivity extends Activity {
 
 	}
 
-	/*
+	/**
+	 * Calculates the two possible coordinates of intersection and the midpoint between the two.
 	 * http://fypandroid.wordpress.com/2011/07/03/how-to-calculate-the-intersection-of-two-circles-java/
 	 */
 	private void twoAPs() {
@@ -159,6 +165,11 @@ public class PrintXMLActivity extends Activity {
 		y2 = Double.parseDouble(aps.get(1).getY());
 		r1 = aps.get(0).getDistance();
 		r2 = aps.get(1).getDistance();
+
+		// If AP detected is not in current level, give it less weighting.
+		if (!aps.get(0).getLevel().equals(levelNo)){ r1 = r1/5; }
+		if (!aps.get(1).getLevel().equals(levelNo)){ r2 = r2/5; }
+
 		boolean intersects = isIntersecting(x1, y1, x2, y2, r1, r2);
 		double d = getDistance(x1, y1, x2, y2);
 
@@ -173,38 +184,46 @@ public class PrintXMLActivity extends Activity {
 		else if (intersects){
 
 			double d1 = (Math.pow(r1, 2) - Math.pow(r2, 2) + Math.pow(d, 2))/(2*d);
-			//			double h = Math.sqrt(Math.pow(r1, 2) - Math.pow(d1, 2));
+			double h = Math.sqrt(Math.pow(r1, 2) - Math.pow(d1, 2));
 			double x3 = x1 + (d1 * (x2 - x1))/d;
 			double y3 = y1 + (d1 * (y2 - y1))/d;
 
-			//			//Get intersecting coordinates
-			//			String dx =  df.format(x3 + (h*(y2-y1))/d);
-			//			String dy = df.format(y3 - (h*(x2-x1))/d);
-			//			String dx2 = df.format(x3 - (h*(y2-y1))/d);
-			//			String dy2 = df.format(y3 + (h*(x2-x1))/d);
-			//			coordinates.add("("+dx+", "+dy+")");
-			//			coordinates.add("("+dx2+", "+dy2+")");
-			coordinates.add("Midpoint: ("+df.format(x3)+", "+df.format(y3)+")");
+			//Get intersecting coordinates
+			String dx =  df.format(x3 + (h*(y2-y1))/d);
+			String dy = df.format(y3 - (h*(x2-x1))/d);
+			String dx2 = df.format(x3 - (h*(y2-y1))/d);
+			String dy2 = df.format(y3 + (h*(x2-x1))/d);
+			coordinates.add("2 Access Points detected: ");
+			coordinates.add("("+dx+", "+dy+")");
+			coordinates.add("("+dx2+", "+dy2+")");
+			coordinates.add("X, Y: ("+df.format(x3)+", "+df.format(y3)+")");
 		}
 	}
 
-	/*
+	/**
+	 * Returns six points that are 10m away around the access point.
 	 * http://board.flashkit.com/board/showthread.php?773919-trying-to-find-coordinates-for-points-around-a-circle
 	 */
 	private void oneAP() {
+
+		DecimalFormat df = new DecimalFormat("#.##");
+		double angle = Math.PI * 2/6;
+		coordinates.add("1 Access Point detected: ");
+		coordinates.add("Six possible coordinates");
+		for (int i = 0; i < 6; ++i){
+			double theta = angle * i;
+			double radius = aps.get(0).getDistance();
+			if (radius >= 10) radius = 10;
+			String X = df.format(Math.cos(theta) * radius + Double.parseDouble(aps.get(0).getX()));
+			String Y = df.format(Math.sin(theta) * radius + Double.parseDouble(aps.get(0).getY()));
+			coordinates.add("("+X+", "+Y+")");
+		}
+		coordinates.add(" ");
+		coordinates.add("Midpoint: ");
 		X = aps.get(0).getX();
 		Y = aps.get(0).getY();
-		coordinates.add("("+X+", "+Y+")");
+		coordinates.add("X, Y: ("+X+", "+Y+")");
 
-		//		DecimalFormat df = new DecimalFormat("#.##");
-		//		double angle = Math.PI * 2/6;
-		//		for (int i = 0; i < 6; ++i){
-		//			double theta = angle * i;
-		//			double radius = aps.get(0).getDistance();
-		//			String X = df.format(Math.cos(theta) * radius + Double.parseDouble(aps.get(0).getX()));
-		//			String Y = df.format(Math.sin(theta) * radius + Double.parseDouble(aps.get(0).getY()));
-		//			coordinates.add("("+X+", "+Y+")");
-		//		}
 	}
 
 	/**
@@ -243,7 +262,7 @@ public class PrintXMLActivity extends Activity {
 						a.setFreq(sr.frequency);
 					}
 				}
-				if (a.getLevel().equals(levelNo) && a.getRssi() != 0)
+				if (a.getRssi() != 0)
 					aps.add(a);
 			}
 			br.close();
