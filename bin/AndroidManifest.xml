@@ -7,9 +7,13 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="19" />
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
+
+    <uses-permission android:name="android.permission.INTERNET" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" >
+    </uses-permission>
 
     <application
         android:allowBackup="true"
@@ -32,6 +36,10 @@
         <activity
             android:name="ipsv2.activities.PrintXMLActivity"
             android:label="@string/title_activity_print_xml" >
+        </activity>
+         <activity
+            android:name="ipsv2.activities.DisplayCoordinates"
+            android:label="@string/title_activity_display_coordinates" >
         </activity>
     </application>
 
